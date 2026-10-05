@@ -1,600 +1,408 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQA 7018 - Quiz 1 (Weeks 1–4)</title>
-    <!-- html2pdf.js for generating PDF receipts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <style>
-        :root {
-            --um-blue: #002B49;
-            --um-gold: #D4AF37;
-            --bg-color: #F4F6F9;
-            --card-bg: #FFFFFF;
-            --text-color: #333333;
-            --border-color: #E0E0E0;
-            --success-color: #2E7D32;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 850px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        }
-
-        header {
-            border-bottom: 3px solid var(--um-blue);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .header-title h1 {
-            color: var(--um-blue);
-            font-size: 24px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .header-title h2 {
-            color: #555;
-            font-size: 16px;
-            font-weight: 400;
-            margin-top: 5px;
-        }
-
-        .badge {
-            background-color: var(--um-gold);
-            color: #000;
-            padding: 5px 12px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .form-section {
-            background-color: #F8F9FA;
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            border-radius: 6px;
-            margin-bottom: 30px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group.full-width {
-            grid-column: span 2;
-        }
-
-        label {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--um-blue);
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 14px;
-            outline: none;
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--um-blue);
-        }
-
-        input[readonly] {
-            background-color: #E9ECEF;
-            color: #495057;
-            cursor: not-allowed;
-        }
-
-        .question-card {
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 20px;
-            margin-bottom: 20px;
-            background-color: #FFF;
-        }
-
-        .question-title {
-            font-weight: 600;
-            font-size: 15px;
-            margin-bottom: 12px;
-            color: #222;
-        }
-
-        .code-block {
-            background-color: #272822;
-            color: #F8F8F2;
-            padding: 12px;
-            border-radius: 5px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 13px;
-            margin-bottom: 12px;
-            white-space: pre-wrap;
-            overflow-x: auto;
-        }
-
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .option-label {
-            display: flex;
-            align-items: center;
-            padding: 10px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s, border-color 0.2s;
-            font-size: 14px;
-        }
-
-        .option-label:hover {
-            background-color: #F0F4F8;
-            border-color: var(--um-blue);
-        }
-
-        .option-label input[type="radio"] {
-            margin-right: 12px;
-            accent-color: var(--um-blue);
-        }
-
-        .btn {
-            background-color: var(--um-blue);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            transition: background-color 0.2s;
-        }
-
-        .btn:hover {
-            background-color: #001f35;
-        }
-
-        .btn-secondary {
-            background-color: var(--success-color);
-            margin-top: 15px;
-        }
-
-        .btn-secondary:hover {
-            background-color: #1b5e20;
-        }
-
-        #confirmation-screen {
-            display: none;
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .success-icon {
-            font-size: 48px;
-            color: var(--success-color);
-            margin-bottom: 15px;
-        }
-
-        .receipt-box {
-            text-align: left;
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            border-radius: 6px;
-            background-color: #F8F9FA;
-            margin: 20px 0;
-        }
-
-        footer {
-            margin-top: 40px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            color: #777;
-        }
-
-        .instructor-link {
-            color: #777;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .instructor-link:hover {
-            text-decoration: underline;
-            color: var(--um-blue);
-        }
-
-        #instructor-panel {
-            display: none;
-            margin-top: 25px;
-            background-color: #FFF8E1;
-            border: 1px solid var(--um-gold);
-            padding: 20px;
-            border-radius: 6px;
-        }
-
-        #instructor-panel h3 {
-            color: #7A5200;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-
-        .grade-display {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--um-blue);
-            margin-top: 10px;
-        }
-
-        @media (max-width: 600px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            .form-group.full-width {
-                grid-column: span 1;
-            }
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQA 7018 - Quiz 1 (Weeks 1-4)</title>
+<style>
+:root {
+--primary-color: #003366; /* Academic Blue */
+--secondary-color: #f4f7f6;
+--accent-color: #0066cc;
+--text-color: #333;
+--border-color: #ddd;
+}
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background-color: var(--secondary-color);
+color: var(--text-color);
+line-height: 1.6;
+margin: 0;
+padding: 20px;
+}
+.container {
+max-width: 800px;
+margin: 0 auto;
+background: #fff;
+padding: 30px;
+border-radius: 8px;
+box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+header {
+text-align: center;
+border-bottom: 2px solid var(--primary-color);
+margin-bottom: 30px;
+padding-bottom: 10px;
+}
+h1 {
+color: var(--primary-color);
+margin-bottom: 5px;
+}
+h2 {
+font-size: 1.2rem;
+color: #555;
+font-weight: normal;
+}
+.form-group {
+margin-bottom: 15px;
+}
+.form-group label {
+display: block;
+font-weight: bold;
+margin-bottom: 5px;
+}
+.form-group input[type="text"] {
+width: 100%;
+padding: 10px;
+border: 1px solid var(--border-color);
+border-radius: 4px;
+box-sizing: border-box;
+}
+.form-group input[readonly] {
+background-color: #e9ecef;
+color: #495057;
+cursor: not-allowed;
+}
+.question-block {
+margin-bottom: 25px;
+padding: 15px;
+background-color: #fafafa;
+border-left: 4px solid var(--primary-color);
+border-radius: 4px;
+}
+.question-text {
+font-weight: bold;
+margin-bottom: 10px;
+}
+.options label {
+display: block;
+margin-bottom: 8px;
+cursor: pointer;
+}
+.options input[type="radio"] {
+margin-right: 10px;
+}
+.submit-btn {
+background-color: var(--primary-color);
+color: #fff;
+border: none;
+padding: 12px 25px;
+font-size: 1.1rem;
+border-radius: 4px;
+cursor: pointer;
+width: 100%;
+transition: background-color 0.3s ease;
+}
+.submit-btn:hover {
+background-color: var(--accent-color);
+}
+#confirmation-screen {
+display: none;
+text-align: center;
+padding: 40px 20px;
+}
+.success-icon {
+color: #28a745;
+font-size: 3rem;
+margin-bottom: 10px;
+}
+.download-btn {
+background-color: #28a745;
+color: #fff;
+border: none;
+padding: 10px 20px;
+font-size: 1rem;
+border-radius: 4px;
+cursor: pointer;
+margin-top: 20px;
+}
+.download-btn:hover {
+background-color: #218838;
+}
+footer {
+margin-top: 40px;
+text-align: center;
+font-size: 0.9rem;
+color: #777;
+}
+.instructor-link {
+color: #aaa;
+text-decoration: none;
+cursor: pointer;
+}
+.instructor-link:hover {
+color: var(--primary-color);
+}
+#instructor-panel {
+display: none;
+margin-top: 30px;
+padding: 20px;
+background-color: #fff3cd;
+border: 1px solid #ffeeba;
+border-radius: 4px;
+color: #856404;
+}
+.student-details th, .student-details td {
+text-align: left;
+padding: 8px;
+border-bottom: 1px solid #ddd;
+}
+.code-block {
+font-family: monospace;
+background-color: #eaeaea;
+padding: 2px 4px;
+border-radius: 3px;
+}
+</style>
 </head>
 <body>
-
-<div class="container" id="printable-area">
-    <header>
-        <div class="header-title">
-            <h1>Universiti Malaya</h1>
-            <h2>SQA 7018: Advanced Computational Techniques</h2>
-        </div>
-        <div class="badge">Quiz 1 (Weeks 1–4)</div>
-    </header>
-
-    <!-- QUIZ FORM -->
-    <div id="quiz-screen">
-        <form id="quiz-form">
-            <div class="form-section">
-                <div class="form-grid">
-                    <div class="form-group full-width">
-                        <label>Course Name</label>
-                        <input type="text" value="SQA 7018 - Advanced Computational Techniques" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="student-name">Student Full Name *</label>
-                        <input type="text" id="student-name" required placeholder="e.g. John Doe">
-                    </div>
-                    <div class="form-group">
-                        <label for="student-id">Student ID / Matric No. *</label>
-                        <input type="text" id="student-id" required placeholder="e.g. 17000000">
-                    </div>
-                    <div class="form-group full-width">
-                        <label>Submission Timestamp</label>
-                        <input type="text" id="timestamp" readonly>
-                    </div>
-                </div>
-            </div>
-
-            <div id="questions-container">
-                <!-- Question 1 -->
-                <div class="question-card">
-                    <div class="question-title">1. What is the resulting output and data type of `c` in the following snippet?</div>
-                    <div class="code-block">a = 5
-b = 2.0
-c = a / b</div>
-                    <div class="options">
-                        <label class="option-label"><input type="radio" name="q1" value="A" required> A) 2 (class 'int')</label>
-                        <label class="option-label"><input type="radio" name="q1" value="B"> B) 2.5 (class 'float')</label>
-                        <label class="option-label"><input type="radio" name="q1" value="C"> C) 2.5 (class 'str')</label>
-                        <label class="option-label"><input type="radio" name="q1" value="D"> D) 2 (class 'float')</label>
-                    </div>
-                </div>
-
-                <!-- Question 2 -->
-                <div class="question-card">
-                    <div class="question-title">2. What will be the printed output of the following code?</div>
-                    <div class="code-block">x = 10
-y = 20
-if (x == 10) & (y == 5):
-    print("Condition A")
-elif (x == 10) | (y == 5):
-    print("Condition B")
-else:
-    print("Condition C")</div>
-                    <div class="options">
-                        <label class="option-label"><input type="radio" name="q2" value="A" required> A) Condition A</label>
-                        <label class="option-label"><input type="radio" name="q2" value="B"> B) Condition B</label>
-                        <label class="option-label"><input type="radio" name="q2" value="C"> C) Condition C</label>
-                        <label class="option-label"><input type="radio" name="q2" value="D"> D) SyntaxError</label>
-                    </div>
-                </div>
-
-                <!-- Question 3 -->
-                <div class="question-card">
-                    <div class="question-title">3. How many total times will the print statement execute in this loop?</div>
-                    <div class="code-block">count = 0
-while count < 4:
-    print(count)
-    count += 1</div>
-                    <div class="options">
-                        <label class="option-label"><input type="radio" name="q3" value="A" required> A) 3 times</label>
-                        <label class="option-label"><input type="radio" name="q3" value="B"> B) 4 times</label>
-                        <label class="option-label"><input type="radio" name="q3" value="C"> C) 5 times</label>
-                        <label class="option-label"><input type="radio" name="q3" value="D"> D) Infinite loop</label>
-                    </div>
-                </div>
-
-                <!-- Question 4 -->
-                <div class="question-card">
-                    <div class="question-title">4. Given the dictionary structure below, which statement correctly extracts the grade `'A'`?</div>
-                    <div class="code-block">student = {
-    'name': 'John',
-    'grade': {'python': 'A', 'AI': 'B'}
-}</div>
-                    <div class="options">
-                        <label class="option-label"><input type="radio" name="q4" value="A" required> A) student['grade'][0]</label>
-                        <label class="option-label"><input type="radio" name="q4" value="B"> B) student['grade']['python']</label>
-                        <label class="option-label"><input type="radio" name="q4" value="C"> C) student['python']</label>
-                        <label class="option-label"><input type="radio" name="q4" value="D"> D) student.get('grade[python]')</label>
-                    </div>
-                </div>
-
-                <!-- Question 5 -->
-                <div class="question-card">
-                    <div class="question-title">5. What is the value of `item` after executing this list operation?</div>
-                    <div class="code-block">arr = [10, 20, 30, 40]
-arr.insert(0, 99)
-item = arr[1]</div>
-                    <div class="options">
-                        <label class="option-label"><input type="radio" name="q5" value="A" required> A) 99</label>
-                        <label class="option-label"><input type="radio" name="q5" value="B"> B) 10</label>
-                        <label class="option-label"><input type="radio" name="q5" value="C"> C) 20</label>
-                        <label class="option-label"><input type="radio" name="q5" value="D"> D) 30</label>
-                    </div>
-                </div>
-
-                <!-- Question 6 -->
-                <div class="question-card">
-                    <div class="question-title">6. What happens if you attempt to modify an element of a tuple, e.g., `cars[0] = "Honda"`?</div>
-                    <div class="code-block">cars = ("Mercedes", "Ferrari", "Toyota")
-cars[0] = "Honda"</div>
-                    <div class="options">
-                        <label class="option-label"><input type="radio" name="q6" value="A" required> A) The tuple is successfully updated.</label>
-                        <label class="option-label"><input type="radio" name="q6" value="B"> B) A new list is automatically created.</label>
-                        <label class="option-label"><input type="radio" name="q6" value="C"> C) Python raises a TypeError because tuples are immutable.</label>
-                        <label class="option-label"><input type="radio" name="q6" value="D"> D) The operation is ignored silently.</label>
-                    </div>
-                </div>
-
-                <!-- Question 7 -->
-                <div class="question-card">
-                    <div class="question-title">7. What is the correct slice syntax to output `"World!"` from `msg = "Hello, World!"`?</div>
-                    <div class="code-block">msg = "Hello, World!"</div>
-                    <div class="options">
-                        <label class="option-label"><input type="radio" name="q7" value="A" required> A) msg[7:]</label>
-                        <label class="option-label"><input type="radio" name="q7" value="B"> B) msg[6:11]</label>
-                        <label class="option-label"><input type="radio" name="q7" value="C"> C) msg[:7]</label>
-                        <label class="option-label"><input type="radio" name="q7" value="D"> D) msg.slice(7)</label>
-                    </div>
-                </div>
-
-                <!-- Question 8 -->
-                <div class="question-card">
-                    <div class="question-title">8. In Object-Oriented Programming, what is the purpose of `self` in Python class methods?</div>
-                    <div class="code-block">class Car:
-    def __init__(self, make):
-        self.make = make</div>
-                    <div class="options">
-                        <label class="option-label"><input type="radio" name="q8" value="A" required> A) It is a reserved keyword that imports global variables.</label>
-                        <label class="option-label"><input type="radio" name="q8" value="B"> B) It refers to the specific instance of the object being created/manipulated.</label>
-                        <label class="option-label"><input type="radio" name="q8" value="C"> C) It serves as a placeholder for static class calculations.</label>
-                        <label class="option-label"><input type="radio" name="q8" value="D"> D) It converts class attributes directly into dictionary keys.</label>
-                    </div>
-                </div>
-
-                <!-- Question 9 -->
-                <div class="question-card">
-                    <div class="question-title">9. What will be the shape of the array generated by `np.linspace(0, 100, 5)`?</div>
-                    <div class="code-block">import numpy as np
-linear_space = np.linspace(0, 100, 5)</div>
-                    <div class="options">
-                        <label class="option-label"><input type="radio" name="q9" value="A" required> A) A 1D array with 5 evenly spaced elements.</label>
-                        <label class="option-label"><input type="radio" name="q9" value="B"> B) A 1D array with elements stepping by 5 (0, 5, 10...).</label>
-                        <label class="option-label"><input type="radio" name="q9" value="C"> C) A 5x5 2D matrix.</label>
-                        <label class="option-label"><input type="radio" name="q9" value="D"> D) A 1D array containing 100 elements.</label>
-                    </div>
-                </div>
-
-                <!-- Question 10 -->
-                <div class="question-card">
-                    <div class="question-title">10. What operator is used in NumPy for true matrix multiplication (row-by-column)?</div>
-                    <div class="code-block">import numpy as np
-A = np.array([[1, 2], [3, 4]])
-B = np.array([[2, 0], [1, 2]])</div>
-                    <div class="options">
-                        <label class="option-label"><input type="radio" name="q10" value="A" required> A) A * B</label>
-                        <label class="option-label"><input type="radio" name="q10" value="B"> B) A % B</label>
-                        <label class="option-label"><input type="radio" name="q10" value="C"> C) A @ B</label>
-                        <label class="option-label"><input type="radio" name="q10" value="D"> D) A ** B</label>
-                    </div>
-                </div>
-            </div>
-
-            <button type="submit" class="btn">Submit Quiz</button>
-        </form>
-    </div>
-
-    <!-- CONFIRMATION SCREEN -->
-    <div id="confirmation-screen">
-        <div class="success-icon">✓</div>
-        <h2>Quiz Submitted Successfully!</h2>
-        <p>Your responses have been recorded.</p>
-
-        <div class="receipt-box" id="receipt-details">
-            <h3>Submission Receipt</h3>
-            <hr style="margin: 10px 0; border: 0; border-top: 1px solid #ccc;">
-            <p><strong>Course:</strong> SQA 7018 - Advanced Computational Techniques</p>
-            <p><strong>Student Name:</strong> <span id="rec-name"></span></p>
-            <p><strong>Student ID:</strong> <span id="rec-id"></span></p>
-            <p><strong>Timestamp:</strong> <span id="rec-timestamp"></span></p>
-            <p><strong>Status:</strong> Submitted & Logged</p>
-        </div>
-
-        <button class="btn btn-secondary" onclick="downloadPDF()">Download Submission Receipt (PDF)</button>
-    </div>
-
-    <!-- SECRET INSTRUCTOR PANEL -->
-    <div id="instructor-panel">
-        <h3>Instructor Verification Panel</h3>
-        <p><strong>Student Name:</strong> <span id="inst-name"></span></p>
-        <p><strong>Matric Number:</strong> <span id="inst-id"></span></p>
-        <p><strong>Timestamp:</strong> <span id="inst-time"></span></p>
-        <div class="grade-display">Score: <span id="inst-score"></span> / 10</div>
-    </div>
-
-    <footer>
-        <div>© Universiti Malaya - Department of Computational Sciences</div>
-        <div><a href="#" class="instructor-link" onclick="toggleInstructorMode(event)">Instructor Login</a></div>
-    </footer>
+<div class="container" id="main-container">
+<header>
+<h1>Universiti Malaya</h1>
+<h2>SQA 7018 - Advanced Computational Techniques</h2>
+<p>Quiz 1 (Weeks 1–4)</p>
+</header>
+<form id="quiz-form">
+<!-- Student Information Form -->
+<fieldset style="border: 1px solid #ddd; padding: 20px; border-radius: 4px; margin-bottom: 30px;">
+<legend style="font-weight: bold; color: var(--primary-color);">Student Information</legend>
+<div class="form-group">
+<label for="course-name">Course</label>
+<input type="text" id="course-name" value="SQA 7018 Advanced Computational Techniques" readonly>
 </div>
-
+<div class="form-group">
+<label for="timestamp">Timestamp (Auto-Captured)</label>
+<input type="text" id="timestamp" readonly>
+</div>
+<div class="form-group">
+<label for="student-name">Full Name <span style="color:red;">*</span></label>
+<input type="text" id="student-name" required placeholder="Enter your full name">
+</div>
+<div class="form-group">
+<label for="student-id">Student Number (ID) <span style="color:red;">*</span></label>
+<input type="text" id="student-id" required placeholder="Enter your matrix/student number">
+</div>
+</fieldset>
+<!-- Quiz Questions -->
+<div id="questions-container">
+<!-- Question 1 -->
+<div class="question-block">
+<div class="question-text">1. Which of the following is NOT listed as a benefit of learning Python?</div>
+<div class="options">
+<label><input type="radio" name="q1" value="A" required> A) Readability that closely mirrors human language and mathematics</label>
+<label><input type="radio" name="q1" value="B"> B) A required lengthy compilation process before execution</label>
+<label><input type="radio" name="q1" value="C"> C) A rich ecosystem of libraries for scientists (like NumPy and SciPy)</label>
+<label><input type="radio" name="q1" value="D"> D) Being an interpreted language for interactive testing</label>
+</div>
+</div>
+<!-- Question 2 -->
+<div class="question-block">
+<div class="question-text">2. How do you check the current version of the pip package manager in the terminal or Git CMD?</div>
+<div class="options">
+<label><input type="radio" name="q2" value="A" required> A) <span class="code-block">python --version</span></label>
+<label><input type="radio" name="q2" value="B"> B) <span class="code-block">pip --version</span></label>
+<label><input type="radio" name="q2" value="C"> C) <span class="code-block">pip check</span></label>
+<label><input type="radio" name="q2" value="D"> D) <span class="code-block">notebook --version</span></label>
+</div>
+</div>
+<!-- Question 3 -->
+<div class="question-block">
+<div class="question-text">3. In Python, Booleans represent truth values. What is the internal numerical evaluation of <span class="code-block">True</span>?</div>
+<div class="options">
+<label><input type="radio" name="q3" value="A" required> A) 0</label>
+<label><input type="radio" name="q3" value="B"> B) -1</label>
+<label><input type="radio" name="q3" value="C"> C) 1</label>
+<label><input type="radio" name="q3" value="D"> D) 2</label>
+</div>
+</div>
+<!-- Question 4 -->
+<div class="question-block">
+<div class="question-text">4. If <span class="code-block">x = 5</span> and <span class="code-block">y = 6</span>, which of the following conditional operations will evaluate to <span class="code-block">True</span>?</div>
+<div class="options">
+<label><input type="radio" name="q4" value="A" required> A) <span class="code-block">x == y</span></label>
+<label><input type="radio" name="q4" value="B"> B) <span class="code-block">(x == 5) & (y == 5)</span></label>
+<label><input type="radio" name="q4" value="C"> C) <span class="code-block">x != y</span></label>
+<label><input type="radio" name="q4" value="D"> D) <span class="code-block">x > y</span></label>
+</div>
+</div>
+<!-- Question 5 -->
+<div class="question-block">
+<div class="question-text">5. Which of the following array methods removes all elements from a standard Python array (Python 3.3+)?</div>
+<div class="options">
+<label><input type="radio" name="q5" value="A" required> A) <span class="code-block">array.pop()</span></label>
+<label><input type="radio" name="q5" value="B"> B) <span class="code-block">array.remove()</span></label>
+<label><input type="radio" name="q5" value="C"> C) <span class="code-block">array.delete()</span></label>
+<label><input type="radio" name="q5" value="D"> D) <span class="code-block">array.clear()</span></label>
+</div>
+</div>
+<!-- Question 6 -->
+<div class="question-block">
+<div class="question-text">6. Given a dictionary named <span class="code-block">student</span>, how do you correctly extract the value associated with the key 'age'?</div>
+<div class="options">
+<label><input type="radio" name="q6" value="A" required> A) <span class="code-block">student(age)</span></label>
+<label><input type="radio" name="q6" value="B"> B) <span class="code-block">student[1]</span></label>
+<label><input type="radio" name="q6" value="C"> C) <span class="code-block">student['age']</span></label>
+<label><input type="radio" name="q6" value="D"> D) <span class="code-block">student.age[]</span></label>
+</div>
+</div>
+<!-- Question 7 -->
+<div class="question-block">
+<div class="question-text">7. When handling files, which mode should be specified in the <span class="code-block">open()</span> function to create and write to a new file?</div>
+<div class="options">
+<label><input type="radio" name="q7" value="A" required> A) <span class="code-block">"r"</span></label>
+<label><input type="radio" name="q7" value="B"> B) <span class="code-block">"w"</span></label>
+<label><input type="radio" name="q7" value="C"> C) <span class="code-block">"x"</span></label>
+<label><input type="radio" name="q7" value="D"> D) <span class="code-block">"a"</span></label>
+</div>
+</div>
+<!-- Question 8 -->
+<div class="question-block">
+<div class="question-text">8. In Object-Oriented Programming, what is the primary purpose of the <span class="code-block">init</span> method in a class?</div>
+<div class="options">
+<label><input type="radio" name="q8" value="A" required> A) To delete the object from memory when it is no longer needed.</label>
+<label><input type="radio" name="q8" value="B"> B) To act as a constructor that initializes the attributes of the class.</label>
+<label><input type="radio" name="q8" value="C"> C) To inherit properties from a parent class automatically.</label>
+<label><input type="radio" name="q8" value="D"> D) To import external mathematical modules into the object.</label>
+</div>
+</div>
+<!-- Question 9 -->
+<div class="question-block">
+<div class="question-text">9. Which NumPy function is used to automate the creation of a 1D sequence with a defined step size (e.g., progressing from 0 to 10 by steps of 2)?</div>
+<div class="options">
+<label><input type="radio" name="q9" value="A" required> A) <span class="code-block">np.linspace</span></label>
+<label><input type="radio" name="q9" value="B"> B) <span class="code-block">np.zeros</span></label>
+<label><input type="radio" name="q9" value="C"> C) <span class="code-block">np.arange</span></label>
+<label><input type="radio" name="q9" value="D"> D) <span class="code-block">np.step</span></label>
+</div>
+</div>
+<!-- Question 10 -->
+<div class="question-block">
+<div class="question-text">10. In SciPy's differentiation module, which function is used to calculate the first-order partial derivatives for vector-valued functions?</div>
+<div class="options">
+<label><input type="radio" name="q10" value="A" required> A) <span class="code-block">derivative</span></label>
+<label><input type="radio" name="q10" value="B"> B) <span class="code-block">hessian</span></label>
+<label><input type="radio" name="q10" value="C"> C) <span class="code-block">quad</span></label>
+<label><input type="radio" name="q10" value="D"> D) <span class="code-block">jacobian</span></label>
+</div>
+</div>
+</div>
+<button type="submit" class="submit-btn">Submit Quiz</button>
+</form>
+<!-- Confirmation Screen -->
+<div id="confirmation-screen">
+<div class="success-icon">✓</div>
+<h2>Quiz submitted successfully!</h2>
+<p>Your responses have been recorded.</p>
+<button class="download-btn" onclick="downloadReceipt()">Download Submission Receipt</button>
+</div>
+<!-- Instructor Grading Panel -->
+<div id="instructor-panel">
+<h3>Instructor Grading Panel (Secret)</h3>
+<table class="student-details" style="width: 100%; border-collapse: collapse;">
+<tr>
+<th>Student Name:</th>
+<td id="inst-name">-</td>
+</tr>
+<tr>
+<th>Student Number:</th>
+<td id="inst-id">-</td>
+</tr>
+<tr>
+<th>Submission Time:</th>
+<td id="inst-time">-</td>
+</tr>
+<tr>
+<th>Final Score:</th>
+<td><strong id="inst-score" style="font-size: 1.2rem; color: #d32f2f;">- / 10</strong></td>
+</tr>
+</table>
+</div>
+<footer>
+© 2026 Universiti Malaya | <a class="instructor-link" onclick="promptInstructor()">Instructor Login</a>
+</footer>
+</div>
 <script>
-    // Correct Answer Key
-    const ANSWER_KEY = {
-        q1: 'B',
-        q2: 'B',
-        q3: 'B',
-        q4: 'B',
-        q5: 'B',
-        q6: 'C',
-        q7: 'A',
-        q8: 'B',
-        q9: 'A',
-        q10: 'C'
-    };
-
-    let calculatedScore = 0;
-    let submissionData = {};
-
-    // Auto-capture Live Timestamp on Page Load
-    window.addEventListener('DOMContentLoaded', () => {
-        const now = new Date();
-        const formattedTimestamp = now.toLocaleString('en-GB', {
-            dateStyle: 'full',
-            timeStyle: 'medium'
-        });
-        document.getElementById('timestamp').value = formattedTimestamp;
-    });
-
-    // Handle Quiz Submission
-    document.getElementById('quiz-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const studentName = document.getElementById('student-name').value;
-        const studentId = document.getElementById('student-id').value;
-        const timestamp = document.getElementById('timestamp').value;
-
-        // Calculate score silently
-        calculatedScore = 0;
-        for (let i = 1; i <= 10; i++) {
-            const selected = document.querySelector(`input[name="q${i}"]:checked`);
-            if (selected && selected.value === ANSWER_KEY[`q${i}`]) {
-                calculatedScore++;
-            }
-        }
-
-        // Store submission details
-        submissionData = {
-            name: studentName,
-            id: studentId,
-            timestamp: timestamp,
-            score: calculatedScore
-        };
-
-        // Populate receipt view
-        document.getElementById('rec-name').textContent = studentName;
-        document.getElementById('rec-id').textContent = studentId;
-        document.getElementById('rec-timestamp').textContent = timestamp;
-
-        // Populate hidden instructor panel
-        document.getElementById('inst-name').textContent = studentName;
-        document.getElementById('inst-id').textContent = studentId;
-        document.getElementById('inst-time').textContent = timestamp;
-        document.getElementById('inst-score').textContent = calculatedScore;
-
-        // Switch screens
-        document.getElementById('quiz-screen').style.display = 'none';
-        document.getElementById('confirmation-screen').style.display = 'block';
-        window.scrollTo(0, 0);
-    });
-
-    // Download PDF Receipt
-    function downloadPDF() {
-        const element = document.getElementById('receipt-details');
-        const opt = {
-            margin:       1,
-            filename:     `SQA7018_Quiz1_${submissionData.id || 'Receipt'}.pdf`,
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2 },
-            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-        html2pdf().set(opt).from(element).save();
-    }
-
-    // Secret Instructor Login Mode
-    function toggleInstructorMode(event) {
-        event.preventDefault();
-        const password = prompt("Enter Instructor Password:");
-        if (password === "um_sqa7018") {
-            const panel = document.getElementById('instructor-panel');
-            panel.style.display = 'block';
-            alert("Instructor mode unlocked.");
-            panel.scrollIntoView({ behavior: 'smooth' });
-        } else if (password !== null) {
-            alert("Incorrect password.");
-        }
-    }
+// Correct answers mapping based on Week 1-4 lecture notes
+const correctAnswers = {
+q1: 'B', q2: 'B', q3: 'C', q4: 'C', q5: 'D',
+q6: 'C', q7: 'B', q8: 'B', q9: 'C', q10: 'D'
+};
+// Global variables to hold student data for receipt/instructor
+let studentData = {};
+// 1. Capture live timestamp on page load
+window.onload = function() {
+const now = new Date();
+document.getElementById('timestamp').value = now.toLocaleString('en-MY', { timeZone: 'Asia/Kuala_Lumpur' });
+};
+// 2. Handle Quiz Submission
+document.getElementById('quiz-form').addEventListener('submit', function(e) {
+e.preventDefault(); // Prevent page reload
+// Gather student details
+studentData.name = document.getElementById('student-name').value;
+studentData.id = document.getElementById('student-id').value;
+studentData.timestamp = document.getElementById('timestamp').value;
+// Calculate Score silently
+let score = 0;
+studentData.answers = {};
+for (let i = 1; i <= 10; i++) {
+let selectedOption = document.querySelector(input[name="q${i}"]:checked);
+let answer = selectedOption ? selectedOption.value : null;
+studentData.answers[q${i}] = answer || 'No Answer';
+if (answer === correctAnswers[q${i}]) {
+score++;
+}
+}
+studentData.score = score;
+// Hide form, show confirmation
+document.getElementById('quiz-form').style.display = 'none';
+document.getElementById('confirmation-screen').style.display = 'block';
+window.scrollTo(0, 0);
+// Populate Instructor panel in background
+document.getElementById('inst-name').textContent = studentData.name;
+document.getElementById('inst-id').textContent = studentData.id;
+document.getElementById('inst-time').textContent = studentData.timestamp;
+document.getElementById('inst-score').textContent = ${studentData.score} / 10;
+});
+// 3. Reliable Submission Download Fix (Blob text file instead of window.print)
+function downloadReceipt() {
+let receiptText = =================================================\n;
+receiptText +=    SQA 7018 - QUIZ 1 SUBMISSION RECEIPT\n;
+receiptText += =================================================\n\n;
+receiptText += Student Name   : ${studentData.name}\n;
+receiptText += Student Number : ${studentData.id}\n;
+receiptText += Timestamp      : ${studentData.timestamp}\n\n;
+receiptText += --- SELECTED ANSWERS ---\n;
+for (let i = 1; i <= 10; i++) {
+receiptText += Question ${i}: ${studentData.answers[q${i}]}\n;
+}
+receiptText += \nStatus: Successfully Submitted and Recorded.\n;
+receiptText += Note: Grades are hidden pending instructor review.\n;
+receiptText += =================================================\n;
+// Create Blob and URL
+const blob = new Blob([receiptText], { type: 'text/plain' });
+const url = URL.createObjectURL(blob);
+// Create invisible anchor element to trigger download
+const a = document.createElement('a');
+a.href = url;
+a.download = SQA7018_Quiz1_Receipt_${studentData.id}.txt;
+document.body.appendChild(a);
+a.click();
+// Cleanup
+document.body.removeChild(a);
+URL.revokeObjectURL(url);
+}
+// 4. Secret Instructor Mode
+function promptInstructor() {
+const pass = prompt("Enter Instructor Password:");
+if (pass === "um_sqa7018") {
+document.getElementById('instructor-panel').style.display = 'block';
+alert("Instructor mode unlocked. Grading panel is now visible at the bottom of the page.");
+// Scroll down to the panel
+document.getElementById('instructor-panel').scrollIntoView({ behavior: 'smooth' });
+} else if (pass !== null) {
+alert("Incorrect password.");
+}
+}
 </script>
-
 </body>
 </html>
